@@ -61,6 +61,36 @@ public class Doctor {
 
 	return Output;
 }
+
+public String deleteSession(String docNic)
+{
+	String output="";
+	
+	try {
+		Connection connection=connect();
+		
+		if(connection==null)
+		{
+			return "Error while connecting to the database for deleting.";
+		}
+		
+		String query="delete from doctor_portal where doc_nic=?";
+		
+		PreparedStatement prepareStmt=connection.prepareStatement(query);
+		
+		prepareStmt.setInt(1, Integer.parseInt(docNic));
+		prepareStmt.execute();
+		connection.close();
+		
+		output= "deleted successfully";
+	}
+	catch(Exception e)
+	{
+		output="error while deleting the patient";
+		System.err.println(e.getMessage());
+	}
+	return output;
+}		
 	
 	
 
