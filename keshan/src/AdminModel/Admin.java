@@ -3,6 +3,8 @@ package AdminModel;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -365,6 +367,79 @@ public class Admin {
 			
 		}
 		return output;
+	}
+	public String readDoctors()
+
+	{
+		String output= "";
+		
+		
+		
+		try {
+			Connection con=connect();
+			
+			if(con==null)
+			{
+				return "error while connecting to the database for reading";
+			}
+			
+			output = "<table border=\"1\"><tr><th>Doctor name</th>"
+					 +"<th>Doctor nic</th>"
+					 + "<th>doctor email</th></tr>";
+			
+			output= "<table border=\"1\"><tr><th>hospital user name</th>"
+					 +"<th>hospital user nic</th>"
+					 + "<th>hospital user  email</th></tr>";
+			
+			
+					
+					// + "<th>Update</th><th>Remove</th></tr>"; 
+			String  query="select * from doctor_details";
+			String query2="select * from hospital_details";
+			Statement stmtStatement=con.createStatement();
+			Statement stmtStatement2=con.createStatement();
+			ResultSet rs=stmtStatement.executeQuery(query);
+			ResultSet rs2=stmtStatement2.executeQuery(query2);
+			
+			while (rs.next())
+			{
+				String did=Integer.toString(rs.getInt("doc_id"));
+				String dname=rs.getString("doc_name");
+				String dnic=rs.getString("doc_nic");
+				String demail=rs.getString("doc_email");
+				
+				
+				output += "<tr><td>" + dname + "</td>"; 
+				output += "<td>" + dnic + "</td>"; 
+				output += "<td>" + demail + "</td>"; 
+				
+				
+			}
+			while (rs2.next())
+			{
+				String hid=Integer.toString(rs2.getInt("hos_id"));
+				String hname=rs2.getString("hos_name");
+				String hnic=rs2.getString("hos_nic");
+				String hemail=rs2.getString("hos_email");
+				
+				//"<br> <br>";
+				output += "<tr><td><br><br>" + hname + "</td>"; 
+				output += "<td>" + hnic + "</td>"; 
+				output += "<td>" + hemail + "</td>";
+				
+			}
+			
+			con.close();
+			
+			output+="</table>";
+			
+		}
+		catch(Exception e)
+		{
+			output="error while inserting the doctors";
+			System.err.println(e.getMessage());
+		}
+		return output;	
 	}
 
 }
