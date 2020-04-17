@@ -142,5 +142,122 @@ public class Admin {
 	
 		return output;	
 	}
+	public String deleteEmployee(String patientID,String status,String status2)
+
+	{
+		String output="";
+		if(status.equals("patient") && (status2.equals("delete")))
+		{
+		try {
+			Connection connection=connect();
+			
+			if(connection==null)
+			{
+				return "Error while connecting to the database for deleting.";
+			}
+			
+			String query="delete from patient_details where patient_nic=?";
+			
+			PreparedStatement prepareStmt=connection.prepareStatement(query);
+			
+			prepareStmt.setInt(1, Integer.parseInt(patientID));
+			prepareStmt.execute();
+			connection.close();
+			
+			output= "deleted successfully patient";
+		}
+		catch(Exception e)
+		{
+			output="error while deleting the patient";
+			System.err.println(e.getMessage());
+		}
+		
+	}
+		//return output;
+		else if(status.equals("doctor") && (status2.equals("delete")))
+		{
+		try {
+			Connection connection=connect();
+			
+			if(connection==null)
+			{
+				return "Error while connecting to the database for deleting.";
+			}
+			
+			String query="delete from doctor_details where doc_nic=?";
+			
+			PreparedStatement prepareStmt=connection.prepareStatement(query);
+			
+			prepareStmt.setInt(1, Integer.parseInt(patientID));
+			prepareStmt.execute();
+			connection.close();
+			
+			output= "deleted successfully doctor";
+		}
+		catch(Exception e)
+		{
+			output="error while deleting the patient";
+			System.err.println(e.getMessage());
+		}
+		
+	}
+		//return output;
+		else if(status.equals("hospital") && (status2.equals("delete")))
+		{
+		try {
+			Connection connection=connect();
+			
+			if(connection==null)
+			{
+				return "Error while connecting to the database for deleting.";
+			}
+			
+			String query="delete from hospital_details where hos_nic=?";
+			
+			PreparedStatement prepareStmt=connection.prepareStatement(query);
+			
+			prepareStmt.setInt(1, Integer.parseInt(patientID));
+			prepareStmt.execute();
+			connection.close();
+			
+			output= "deleted successfully hospital";
+		}
+		catch(Exception e)
+		{
+			output="error while deleting the patient";
+			System.err.println(e.getMessage());
+		}
+		
+	}
+		//return output;
+		else if(status.equals("appointment") && (status2.equals("delete")))
+		{
+		try {
+			Connection connection=connect();
+			
+			if(connection==null)
+			{
+				return "Error while connecting to the database for deleting.";
+			}
+			
+			String query="delete from appointment_details where patient_nic=?";
+			
+			PreparedStatement prepareStmt=connection.prepareStatement(query);
+			
+			prepareStmt.setInt(1, Integer.parseInt(patientID));
+			prepareStmt.execute();
+			connection.close();
+			
+			output= "deleted successfully";
+		}
+		catch(Exception e)
+		{
+			output="error while deleting the patient";
+			System.err.println(e.getMessage());
+		}
+		
+	}
+		return output;
+	}
 
 }
