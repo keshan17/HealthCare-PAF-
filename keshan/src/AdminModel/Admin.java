@@ -259,5 +259,112 @@ public class Admin {
 	}
 		return output;
 	}
+	public String updateEmployees(String name,String nic,String email,String password,String status)
+
+	{
+		String output="";
+	
+		 if(status.equals("doctor"))
+		{
+			try {
+				Connection connection=connect();
+				if(connection==null)
+				{
+					return "error while connecting to the database for updating";
+				}
+				
+				String query="UPDATE doctor_details SET doc_name=?,doc_email=?,doc_password=? "
+						+ "where doc_nic=? ";
+						
+						PreparedStatement pStatement=connection.prepareStatement(query);
+						
+						//pStatement.setString(1, appointmentNum);
+						pStatement.setString(1, name);
+						pStatement.setString(2, email);
+						pStatement.setString(3, password);
+						pStatement.setString(4, nic); 
+						
+						pStatement.execute();
+						connection.close();
+						
+						output="updated successfully";
+			}
+			catch (Exception e) {
+				// TODO: handle exception
+				output="error while updating the appointment";
+				System.err.println(e.getMessage());
+			
+			}
+			
+		}
+		
+		else if(status.equals("patient"))
+		{
+			try {
+				Connection connection=connect();
+				if(connection==null)
+				{
+					return "error while connecting to the database for updating";
+				}
+				
+				String query="UPDATE patient_details SET patient_name=?,patient_email=?,patient_pwd=? "
+						+ "where patient_nic=? ";
+						
+						PreparedStatement pStatement=connection.prepareStatement(query);
+						
+						//pStatement.setString(1, appointmentNum);
+						pStatement.setString(1, name);
+						pStatement.setString(2, email);
+						pStatement.setString(3, password);
+						pStatement.setString(4, nic); 
+						
+						pStatement.execute();
+						connection.close();
+						
+						output="updated successfully";
+			}
+			catch (Exception e) {
+				// TODO: handle exception
+				output="error while updating the appointment";
+				System.err.println(e.getMessage());
+			
+			}
+		}
+		else if(status.equals("hospital"))
+		{
+			try {
+				Connection connection=connect();
+				if(connection==null)
+				{
+					return "error while connecting to the database for updating";
+				}
+				
+				String query="UPDATE hospital_details SET hos_name=?,hos_email=?,hos_pwd=? "
+						+ "where hos_nic=? ";
+						
+						PreparedStatement pStatement=connection.prepareStatement(query);
+						
+						//pStatement.setString(1, appointmentNum);
+						pStatement.setString(1, name);
+						pStatement.setString(2, email);
+						pStatement.setString(3, password);
+						pStatement.setString(4, nic); 
+						
+						pStatement.execute();
+						connection.close();
+						
+						output="updated successfully";
+			}
+			catch (Exception e) {
+				// TODO: handle exception
+				output="error while updating the appointment";
+				System.err.println(e.getMessage());
+			
+			}
+			
+			
+		}
+		return output;
+	}
 
 }
