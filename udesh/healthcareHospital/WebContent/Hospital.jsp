@@ -1,5 +1,55 @@
+<%@page import="hospitalPortal.Hospital" %>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+     <%
+if (request.getParameter("hospital") != null) 
+	{
+		Hospital reg=new Hospital();
+		//reg.connect();
+		String stsMsg=reg.createHospital(request.getParameter("hospital"),
+				request.getParameter("License"),
+				request.getParameter("number"),
+				request.getParameter("Enumber"),
+				request.getParameter("facilities"),
+				request.getParameter("roomNo"));
+	
+		//String sports[]=request.getParameterValues("facilities");
+		
+
+		session.setAttribute("statusMsg", stsMsg);
+		//response.sendRedirect("loginGui.jsp");
+						
+	}
+ 
+	if (request.getParameter("Eenumber") != null)
+	{
+		Hospital itemObject = new Hospital();
+	 	String stsMsg = itemObject.deleteHospital(request.getParameter("Eenumber"));
+	 	
+	 session.setAttribute("statusMsg", stsMsg);
+	} 
+	
+	 if (request.getParameter("uLicense") != null) 
+	{
+		Hospital update=new Hospital();
+		//app.connect();
+		String stsMsg=update.updateHospital(request.getParameter("uLicense"),
+				request.getParameter("unumber"),
+				request.getParameter("uEnumber"),
+				request.getParameter("ufacilities"),  
+				request.getParameter("uroomNo"));
+	
+		
+
+		session.setAttribute("statusMsg", stsMsg);
+		//response.sendRedirect("patient.jsp");
+						
+	}  
+	
+    %>
+    
+    
+   
 <!DOCTYPE html>
 <html>
 <head>
