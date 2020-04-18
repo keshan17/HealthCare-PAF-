@@ -90,7 +90,48 @@ public String deleteSession(String docNic)
 		System.err.println(e.getMessage());
 	}
 	return output;
-}		
+}	
+public String updateSession(String nic,String hospital,String date,String time,String time2,String roomno)
+{
+	String output="";
+	
+	try {
+		Connection connection=connect();
+		if(connection==null)
+		{
+			return "error while connecting to the database for updating";
+		}
+		
+		String query="UPDATE doctor_portal SET doc_hospital=?,date=?,time=?,time2=?,room_no=? "
+				+ "where doc_nic=? ";
+				
+				PreparedStatement pStatement=connection.prepareStatement(query);
+				
+				//pStatement.setString(1, appointmentNum);
+				
+				pStatement.setString(1, hospital);
+				pStatement.setString(2, date);
+				pStatement.setString(3, time);
+				pStatement.setString(4, time2);
+				pStatement.setInt(5, Integer.parseInt(roomno));
+				pStatement.setString(6, nic);
+				
+				
+				
+				
+				pStatement.execute();
+				connection.close();
+				System.out.print("updated");
+				output="updated successfully";
+	}
+	catch (Exception e) {
+		// TODO: handle exception
+		System.out.print("not updated");
+		output="error while updating the appointment";
+		System.err.println(e.getMessage());
+	}
+	return output;
+}
 	
 	
 
