@@ -29,9 +29,200 @@ public class Admin {
 		}
 		return con;
 	}
+	public String readDoctors()
+
+	{
+		String output= "";
+		
+		
+		
+		try {
+			Connection con=connect();
+			
+			if(con==null)
+			{
+				return "error while connecting to the database for reading";
+			}
+			
+			output = "<table border=\"1\"><tr><th>Doctor name</th>"
+					 +"<th>Doctor nic</th>"
+					 + "<th>doctor email</th></tr>";
+			
+//			output= "<table border=\"1\"><tr><th>hospital user name</th>"
+//					 +"<th>hospital user nic</th>"
+//					 + "<th>hospital user  email</th></tr>";
+//			
+			
+					
+					// + "<th>Update</th><th>Remove</th></tr>"; 
+			String  query="select * from doctor_details";
+			//String query2="select * from hospital_details";
+			Statement stmtStatement=con.createStatement();
+			//Statement stmtStatement2=con.createStatement();
+			ResultSet rs=stmtStatement.executeQuery(query);
+			//ResultSet rs2=stmtStatement2.executeQuery(query2);
+			
+			while (rs.next())
+			{
+				String did=Integer.toString(rs.getInt("doc_id"));
+				String dname=rs.getString("doc_name");
+				String dnic=rs.getString("doc_nic");
+				String demail=rs.getString("doc_email");
+				
+				
+				output += "<tr><td>" + dname + "</td>"; 
+				output += "<td>" + dnic + "</td>"; 
+				output += "<td>" + demail + "</td>"; 
+				
+				
+			}
+//			while (rs2.next())
+//			{
+//				String hid=Integer.toString(rs2.getInt("hos_id"));
+//				String hname=rs2.getString("hos_name");
+//				String hnic=rs2.getString("hos_nic");
+//				String hemail=rs2.getString("hos_email");
+//				
+//				//"<br> <br>";
+//				output += "<tr><td><br><br>" + hname + "</td>"; 
+//				output += "<td>" + hnic + "</td>"; 
+//				output += "<td>" + hemail + "</td>";
+//				
+//			}
+			
+			con.close();
+			
+			output+="</table>";
+			
+		}
+		catch(Exception e)
+		{
+			output="error while inserting the doctors";
+			System.err.println(e.getMessage());
+		}
+		return output;	
+		
+		
+	
+	}
+	public String readAppointment()
+
+
+	{
+		String output= "";
+		
+		try {
+			Connection con=connect();
+			
+			if(con==null)
+			{
+				return "error while connecting to the database for reading";
+			}
+			
+			output = "<table border=\"1\"><tr><th>appointment number</th>"
+					 +"<th>patient nic</th>"
+					 + "<th>doctor speclization</th>"
+					 +"<th>doctor name</th>"
+					 +"<th>date</th>"
+					 +"<th>time</th>"
+					 +"<th>hospital</th></tr>";
+					// + "<th>Update</th><th>Remove</th></tr>"; 
+			String  query="select * from appointment_details";
+			Statement stmtStatement=con.createStatement();
+			ResultSet rs=stmtStatement.executeQuery(query);
+			
+			while (rs.next())
+			{
+				String pid=Integer.toString(rs.getInt("appointment_id"));
+				String pnic=rs.getString("patient_nic");
+				String dspecilaztionString=rs.getString("doc_speciality");
+				String dname=rs.getString("doc_name");
+				String adate=rs.getString("appointment_date");
+				String atime=rs.getString("appointment_time");
+				String ahospital=rs.getString("appointment_hospital");
+				
+				output += "<tr><td>" + pid + "</td>"; 
+				output += "<td>" + pnic + "</td>"; 
+				output += "<td>" + dspecilaztionString + "</td>"; 
+				output += "<td>" + dname + "</td>"; 
+				output += "<td>" + adate + "</td>"; 
+				output += "<td>" + atime + "</td>"; 
+				output += "<td>" + ahospital + "</td>"; 
+				
+			}
+			con.close();
+			
+			output+="</table>";
+			
+		}
+		catch(Exception e)
+		{
+			output="error while reading the appointment";
+			System.err.println(e.getMessage());
+		}
+		return output;	
+		
+	}
+	
+	public String readHospitals()
+
+	{
+		String output= "";
+		
+		try {
+			Connection con=connect();
+			
+			if(con==null)
+			{
+				return "error while connecting to the database for reading";
+			}
+			
+			output = "<table border=\"1\"><tr><th>Hospital name</th>"
+					 +"<th>Hospital license number</th>"
+					 + "<th>telephone number</th>"
+					 +"<th>emergancy number</th>"
+					 +"<th>facilities</th>"
+					 +"<th>Room numbers</th></tr>";
+					 //+"<th>hospital</th></tr>";
+					// + "<th>Update</th><th>Remove</th></tr>"; 
+			String  query="select * from hospital ";
+			Statement stmtStatement=con.createStatement();
+			ResultSet rs=stmtStatement.executeQuery(query);
+			
+			while (rs.next())
+			{
+				String name=rs.getString("hos_name");
+				String license=Integer.toString(rs.getInt("hos_license"));
+				String number=Integer.toString(rs.getInt("hos_telephone"));
+				String emergancy=Integer.toString(rs.getInt("hos_emergancy"));
+				String facilities=rs.getString("hos_facilities");
+				String roomno=Integer.toString(rs.getInt("hos_rooms"));
+				
+				
+				output += "<tr><td>" + name + "</td>"; 
+				output += "<td>" + license + "</td>"; 
+				output += "<td>" + number + "</td>"; 
+				output += "<td>" + emergancy + "</td>"; 
+				output += "<td>" + facilities + "</td>"; 
+				output += "<td>" + roomno + "</td>"; 
+				
+				
+			}
+			con.close();
+			
+			output+="</table>";
+			System.out.println("table can be view");
+		}
+		catch(Exception e)
+		{
+			output="error while reading the appointment";
+			System.err.println(e.getMessage());
+			System.out.println("table can't be view");
+		}
+		return output;	
+		
+	}
 	public String createEmployees(String name,String nic,String email,String pwd,String status)
-
-
 	{
 		String output="";
 		if (status.equals("patient")) {
@@ -109,7 +300,7 @@ public class Admin {
 				//return output;
 
 			}
-			else if(status.equals("hospital"))   {
+			else if(status.equals("hospital1"))   {
 				
 				//String output = "";
 				try {
@@ -132,9 +323,11 @@ public class Admin {
 
 					preparedStmt.execute();
 					conn.close();
+					System.out.printf("inserted");
 					output = "Inserted Successfully to the hospital";
 				} catch (Exception e) {
 					e.printStackTrace();
+					System.out.printf("not inserted");
 				}
 				
 				//return output;
@@ -204,7 +397,7 @@ public class Admin {
 		
 	}
 		//return output;
-		else if(status.equals("hospital") && (status2.equals("delete")))
+		else if(status.equals("hospital1") && (status2.equals("delete")))
 		{
 		try {
 			Connection connection=connect();
@@ -332,7 +525,7 @@ public class Admin {
 			
 			}
 		}
-		else if(status.equals("hospital"))
+		else if(status.equals("hospital1"))
 		{
 			try {
 				Connection connection=connect();
@@ -368,78 +561,5 @@ public class Admin {
 		}
 		return output;
 	}
-	public String readDoctors()
-
-	{
-		String output= "";
-		
-		
-		
-		try {
-			Connection con=connect();
-			
-			if(con==null)
-			{
-				return "error while connecting to the database for reading";
-			}
-			
-			output = "<table border=\"1\"><tr><th>Doctor name</th>"
-					 +"<th>Doctor nic</th>"
-					 + "<th>doctor email</th></tr>";
-			
-			output= "<table border=\"1\"><tr><th>hospital user name</th>"
-					 +"<th>hospital user nic</th>"
-					 + "<th>hospital user  email</th></tr>";
-			
-			
-					
-					// + "<th>Update</th><th>Remove</th></tr>"; 
-			String  query="select * from doctor_details";
-			String query2="select * from hospital_details";
-			Statement stmtStatement=con.createStatement();
-			Statement stmtStatement2=con.createStatement();
-			ResultSet rs=stmtStatement.executeQuery(query);
-			ResultSet rs2=stmtStatement2.executeQuery(query2);
-			
-			while (rs.next())
-			{
-				String did=Integer.toString(rs.getInt("doc_id"));
-				String dname=rs.getString("doc_name");
-				String dnic=rs.getString("doc_nic");
-				String demail=rs.getString("doc_email");
-				
-				
-				output += "<tr><td>" + dname + "</td>"; 
-				output += "<td>" + dnic + "</td>"; 
-				output += "<td>" + demail + "</td>"; 
-				
-				
-			}
-			while (rs2.next())
-			{
-				String hid=Integer.toString(rs2.getInt("hos_id"));
-				String hname=rs2.getString("hos_name");
-				String hnic=rs2.getString("hos_nic");
-				String hemail=rs2.getString("hos_email");
-				
-				//"<br> <br>";
-				output += "<tr><td><br><br>" + hname + "</td>"; 
-				output += "<td>" + hnic + "</td>"; 
-				output += "<td>" + hemail + "</td>";
-				
-			}
-			
-			con.close();
-			
-			output+="</table>";
-			
-		}
-		catch(Exception e)
-		{
-			output="error while inserting the doctors";
-			System.err.println(e.getMessage());
-		}
-		return output;	
-	}
-
+	
 }
