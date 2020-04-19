@@ -52,7 +52,7 @@ public class payServ {
 				@FormParam("expdate") String expdate,
 				@FormParam("cvv") String cvv)
 		{
-			String output = p1.updatePayment( nic, cardnumber, cardname, expdate, cvv);
+			String output = p1.addPayment(invoiceNumber, amount, nic, cardnumber, cardname, expdate, cvv);
 			return output;
 		}
 		
