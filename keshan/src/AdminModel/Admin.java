@@ -11,6 +11,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 public class Admin {
+	//db connection
 	public Connection connect()
 	{
 		Connection con=null;
@@ -29,6 +30,7 @@ public class Admin {
 		}
 		return con;
 	}
+	//admin can read doctors
 	public String readDoctors()
 
 	{
@@ -48,13 +50,10 @@ public class Admin {
 					 +"<th>Doctor nic</th>"
 					 + "<th>doctor email</th></tr>";
 			
-//			output= "<table border=\"1\"><tr><th>hospital user name</th>"
-//					 +"<th>hospital user nic</th>"
-//					 + "<th>hospital user  email</th></tr>";
-//			
+		
 			
 					
-					// + "<th>Update</th><th>Remove</th></tr>"; 
+					
 			String  query="select * from doctor_details";
 			//String query2="select * from hospital_details";
 			Statement stmtStatement=con.createStatement();
@@ -76,19 +75,7 @@ public class Admin {
 				
 				
 			}
-//			while (rs2.next())
-//			{
-//				String hid=Integer.toString(rs2.getInt("hos_id"));
-//				String hname=rs2.getString("hos_name");
-//				String hnic=rs2.getString("hos_nic");
-//				String hemail=rs2.getString("hos_email");
-//				
-//				//"<br> <br>";
-//				output += "<tr><td><br><br>" + hname + "</td>"; 
-//				output += "<td>" + hnic + "</td>"; 
-//				output += "<td>" + hemail + "</td>";
-//				
-//			}
+
 			
 			con.close();
 			
@@ -105,6 +92,7 @@ public class Admin {
 		
 	
 	}
+	//admin can view appointment
 	public String readAppointment()
 
 
@@ -163,7 +151,7 @@ public class Admin {
 		return output;	
 		
 	}
-	
+	// admin can view hospitals
 	public String readHospitals()
 
 	{
@@ -222,6 +210,7 @@ public class Admin {
 		return output;	
 		
 	}
+	//admin can create all the users example doctor,patient,and hospital via the status attribute
 	public String createEmployees(String name,String nic,String email,String pwd,String status)
 	{
 		String output="";
@@ -337,6 +326,7 @@ public class Admin {
 	
 		return output;	
 	}
+	//admin can also delete the employees via status and status2 attribute
 	public String deleteEmployee(String patientID,String status,String status2)
 
 	{
@@ -368,7 +358,7 @@ public class Admin {
 		}
 		
 	}
-		//return output;
+		
 		else if(status.equals("doctor") && (status2.equals("delete")))
 		{
 		try {
@@ -396,7 +386,7 @@ public class Admin {
 		}
 		
 	}
-		//return output;
+		
 		else if(status.equals("hospital1") && (status2.equals("delete")))
 		{
 		try {
@@ -424,7 +414,7 @@ public class Admin {
 		}
 		
 	}
-		//return output;
+		
 		else if(status.equals("appointment") && (status2.equals("delete")))
 		{
 		try {
@@ -454,6 +444,7 @@ public class Admin {
 	}
 		return output;
 	}
+	//admin can update the employees who registered to the system.
 	public String updateEmployees(String name,String nic,String email,String password,String status)
 
 	{

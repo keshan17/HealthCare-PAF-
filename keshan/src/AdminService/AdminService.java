@@ -2,10 +2,7 @@ package AdminService;
 
 import AdminModel.Admin;
 
-
-
-
-
+import javax.print.CancelablePrintJob;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 //For JSON
@@ -21,7 +18,7 @@ import org.jsoup.nodes.Document;
 public class AdminService {
 	
 	Admin adminObj = new Admin();
-	
+	//check whether service work or not
 	@GET
 	@Path("/test")
 	@Produces(MediaType.TEXT_HTML)
@@ -29,7 +26,7 @@ public class AdminService {
 	 {
 	 return "Hello";
 	 } 
-	
+	//admin can view the doctors who registered the system via Doc http://localhost:8085/AdminService/AdminService/Admin/Doc
 	@GET
 	@Path("/Doc")
 	@Produces(MediaType.TEXT_HTML)
@@ -37,7 +34,7 @@ public class AdminService {
 	 {
 	 return adminObj.readDoctors();
 	 }
-	
+	//admin can view the appointment who registered the system via Appointment http://localhost:8085/AdminService/AdminService/Admin/Appointment
 	@GET
 	@Path("/Appointment")
 	@Produces(MediaType.TEXT_HTML)
@@ -46,7 +43,7 @@ public class AdminService {
 	 return adminObj.readAppointment();
 	 }
 	
-
+	//admin can view the hospital who registered the system via Appointment http://localhost:8085/AdminService/AdminService/Admin/hospital
 	@GET
 	@Path("/hospital")
 	@Produces(MediaType.TEXT_HTML)
@@ -55,12 +52,12 @@ public class AdminService {
 	 return adminObj.readHospitals();
 	 }
 	
-	
+	//admin can create employees via status. status="doctor" like that
 	@POST
 	@Path("/")
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	@Produces(MediaType.TEXT_PLAIN)
-	public String insertAppointment(@FormParam("name") String name,
+	public String insertEmployees(@FormParam("name") String name,
 	 @FormParam("nic") String nic,
 	 @FormParam("email") String email,
 	 @FormParam("pwd") String pwd,
@@ -71,7 +68,7 @@ public class AdminService {
 	 String output = adminObj.createEmployees(name, nic, email, pwd,status);
 	return output;
 	}
-	
+	//admin can delete the employees via status1 and status2.status1="patient" status2="delete" like that
 	@DELETE
 	@Path("/")
 	@Consumes(MediaType.APPLICATION_XML)
@@ -81,7 +78,7 @@ public class AdminService {
 	//Convert the input string to an XML document
 	 Document doc = Jsoup.parse(adminData, "", Parser.xmlParser());
 
-	//Read the value from the element <itemID>
+	
 	 String nic = doc.select("nic").text();
 	 String status1 = doc.select("status1").text();
 	 String status2 = doc.select("status2").text();
@@ -90,7 +87,7 @@ public class AdminService {
 	 String output = adminObj.deleteEmployee(nic,status1,status2);
 	return output;
 	}
-	
+	//admin can update the employees via status attribute.status="doctor" like that
 	@PUT
 	@Path("/")
 	@Consumes(MediaType.APPLICATION_JSON)
