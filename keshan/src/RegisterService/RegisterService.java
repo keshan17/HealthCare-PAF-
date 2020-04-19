@@ -18,6 +18,14 @@ import org.jsoup.nodes.Document;
 public class RegisterService {
 	Register regObj = new Register();
 	
+	@GET
+	@Path("/test")
+	@Produces(MediaType.TEXT_HTML)
+	public String testService()
+	 {
+	 return "Hello";
+	 } 
+	
 	@POST
 	@Path("/")
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
