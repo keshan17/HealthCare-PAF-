@@ -3,6 +3,8 @@
 	pageEncoding="UTF-8"%>
 
 <%
+
+
 if (request.getParameter("nic") != null) 
 	{
 	Register reg=new Register();

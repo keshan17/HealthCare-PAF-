@@ -1,14 +1,18 @@
 package RegisterModel;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
+import java.sql.*;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+
+
+
+
+
 public class Register {
+	//System.out.println("i out");
 	public Connection connect()
 	{
 		Connection con=null;
@@ -27,6 +31,9 @@ public class Register {
 		}
 		return con;
 	}
+
+	
+	
 	public String getRegistrationInfo(String name, String nic, String email, String pwd, String status)
 
 	 {
@@ -98,8 +105,8 @@ public class Register {
 
 					preparedStmt.setString(1, name);
 					preparedStmt.setString(2, nic);
-					preparedStmt.setString(3, pwd);
-					preparedStmt.setString(4, email);
+					preparedStmt.setString(3, email);
+					preparedStmt.setString(4, pwd);
 					preparedStmt.setString(5, strDate);
 
 					preparedStmt.execute();
@@ -111,7 +118,7 @@ public class Register {
 				//return output;
 
 			}
-			else if(status.equals("hospital"))   {
+			else if(status.equals("hospital1"))   {
 				
 				//String output = "";
 				try {
@@ -135,8 +142,10 @@ public class Register {
 					preparedStmt.execute();
 					conn.close();
 					output = "Inserted Successfully to the hospital";
+					System.out.println("inserted hospital");
 				} catch (Exception e) {
 					e.printStackTrace();
+					System.out.println("not inserted hospital");
 				}
 				
 				//return output;
@@ -146,5 +155,4 @@ public class Register {
 	
 		return output;	
 	 }
-
 }
