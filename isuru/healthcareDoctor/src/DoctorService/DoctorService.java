@@ -2,7 +2,7 @@ package DoctorService;
 
 
 import DoctorModel.Doctor;
-import appointmentModel.Appointment;
+
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -54,4 +54,40 @@ public class DoctorService {
 		return output;
 		}
 		
+		
+		@PUT
+		@Path("/")
+		@Consumes(MediaType.APPLICATION_JSON)
+		@Produces(MediaType.TEXT_PLAIN)
+		public String updateSession(String docData)
+		{
+		//Convert the input string to a JSON object
+		 JsonObject docObject = new JsonParser().parse(docData).getAsJsonObject();
+		//Read the values from the JSON object
+		 String nic = docObject.get("nic").getAsString();
+		 String hospital = docObject.get("hospital").getAsString();
+		 String datee = docObject.get("datee").getAsString();
+		 String time = docObject.get("time").getAsString();
+		 String time2 = docObject.get("time2").getAsString();
+		 String roomno = docObject.get("roomno").getAsString();
+		 
+		 String output = docObj.updateSession(nic,hospital,datee,time,time2,roomno);
+		return output;
+		}
+		
+		
+		@DELETE
+		@Path("/")
+		@Consumes(MediaType.APPLICATION_XML)
+		@Produces(MediaType.TEXT_PLAIN)
+		public String deleteSession(String docData)
+		{
+		//Convert the input string to an XML document
+		 Document doc = Jsoup.parse(docData, "", Parser.xmlParser());
+
+		//Read the value from the element <itemID>
+		 String nic = doc.select("nic").text();
+		 String output = docObj.deleteSession(nic);
+		return output;
+		}
 }

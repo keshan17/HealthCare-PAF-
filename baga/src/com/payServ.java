@@ -44,7 +44,7 @@ public class payServ {
 		@Path("/")
 		@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 		@Produces(MediaType.TEXT_PLAIN)
-		public String addPayment(@FormParam("invoiceNumber") String invoiceNumber,
+		public String addPayment(
 				@FormParam("amount") String amount,
 				@FormParam("nic") String nic,
 				@FormParam("cardnumber") String cardnumber,
@@ -52,11 +52,11 @@ public class payServ {
 				@FormParam("expdate") String expdate,
 				@FormParam("cvv") String cvv)
 		{
-			String output = p1.addPayment(invoiceNumber, amount, nic, cardnumber, cardname, expdate, cvv);
-			return output;
+			String Output = p1.addPayment(amount, nic, cardnumber, cardname, expdate, cvv);
+			return Output;
 		}
 		
-		//update
+	//update
 		@PUT
 		@Path("/")
 		@Consumes(MediaType.APPLICATION_JSON)
@@ -73,8 +73,9 @@ public class payServ {
 			String cardname = paymentObj.get("cardname").getAsString();
 			String expdate = paymentObj.get("expdate").getAsString();
 			String cvv = paymentObj.get("cvv").getAsString();
+			String invoiceNumber = paymentObj.get("invoiceNumber").getAsString();
 
-			String output = p1.updatePayment( nic, cardnumber, cardname, expdate, cvv);
+			String output = p1.updatePayment(nic, cardnumber, cardname, expdate, cvv, invoiceNumber);
 			return output;
 		}
 

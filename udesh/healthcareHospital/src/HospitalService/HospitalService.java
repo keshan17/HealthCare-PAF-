@@ -48,7 +48,39 @@ public class HospitalService {
 	return output;
 	}
 	
+	@PUT
+	@Path("/")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.TEXT_PLAIN)
+	public String updateHospital(String hosData)
+	{
+	//Convert the input string to a JSON object
+	 JsonObject hosObject = new JsonParser().parse(hosData).getAsJsonObject();
+	//Read the values from the JSON object
+	 String License = hosObject.get("License").getAsString();
+	 String tnumber = hosObject.get("tnumber").getAsString();
+	 String enumber = hosObject.get("enumber").getAsString();
+	 String facilities = hosObject.get("facilities").getAsString();
+	 String rooms = hosObject.get("rooms").getAsString();
+	 
+	 String output = hosObj.updateHospital(License,tnumber,enumber,facilities,rooms);
+	return output;
+	}
 	
+	@DELETE
+	@Path("/")
+	@Consumes(MediaType.APPLICATION_XML)
+	@Produces(MediaType.TEXT_PLAIN)
+	public String deleteHospital(String hosData)
+	{
+	//Convert the input string to an XML document
+	 Document doc = Jsoup.parse(hosData, "", Parser.xmlParser());
+
+	//Read the value from the element <itemID>
+	 String emergancyNum = doc.select("emergancyNum").text();
+	 String output = hosObj.deleteHospital(emergancyNum);
+	return output;
+	}
 }
 
 

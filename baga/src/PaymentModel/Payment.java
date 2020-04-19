@@ -25,7 +25,7 @@ public Connection connect()
 	}
 
 	//Add Data
-	public String addPayment(String invoiceNumber,String amount,String nic,String cardnumber,String cardname,String expdate,String cvv)
+	public String addPayment(String amount,String nic,String cardnumber,String cardname,String expdate,String cvv)
 	{
 	String Output ="";
 	
@@ -35,13 +35,13 @@ public Connection connect()
 		if (con == null) {
 		}
 
-		String query = " insert into payment (`invoiceNumber`,`amount`,`payment_nic`, `cardnumber`, `cardname`,`expdate`,`cvv`) "
+		String query = " insert into payment (`invoiceNumber`,`amount`,`nic`, `cardnumber`, `cardname`,`expdate`,`cvv`) "
 				+ "values(?, ?, ?, ?, ?, ?, ?)";
 
 		PreparedStatement preparedStmt = con.prepareStatement(query);
 		
-		preparedStmt.setInt(1, Integer.parseInt(invoiceNumber) );
-		preparedStmt.setInt(2, Integer.parseInt(amount) );
+		preparedStmt.setInt(1,0);
+		preparedStmt.setString(2, amount);
 		preparedStmt.setString(3, nic);
 		preparedStmt.setInt(4, Integer.parseInt(cardnumber) );
 		preparedStmt.setString(5,cardname );
@@ -52,13 +52,13 @@ public Connection connect()
 		
 		preparedStmt.execute();
 		con.close();
-		System.out.println("inserted");
-		Output = "Inserted successfully"; 
-	} catch (Exception e) {
-		e.printStackTrace();
-		System.out.println(" not inserted");
+		Output = "Inserted successfully";
 	}
-
+	catch (Exception e)
+	{
+		Output = "Error while inserting the Payment.";
+		System.err.println(e.getMessage());
+	}
 	return Output;
 	}
 	
@@ -97,7 +97,7 @@ public Connection connect()
 	//Update Data
 	
 	//Update
-	public String updatePayment(String nic,String cardnumber,String cardname,String expdate,String cvv)
+	public String updatePayment(String nic,String cardnumber,String cardname,String expdate,String cvv,String invoiceNumber)
 	{
 		String output = "";
 		try
@@ -106,7 +106,7 @@ public Connection connect()
 			if (con == null)
 			{return "Error while connecting to the database for updating."; }
 			// create a prepared statement
-			String query = "UPDATE  SET   payment_nic=?, cardnumber=?, cardname=?, expdate=?, cvv=? WHERE invoiceNumber=? ";
+			String query = "UPDATE payment SET   nic=?, cardnumber=?, cardname=?, expdate=?, cvv=? WHERE invoiceNumber=? ";
 			PreparedStatement preparedStmt = con.prepareStatement(query);
 			// binding values
 			preparedStmt.setString(1, nic);
@@ -114,6 +114,7 @@ public Connection connect()
 			preparedStmt.setString(3,cardname );
 			preparedStmt.setString(4,expdate );
 			preparedStmt.setString(5,cvv );
+			preparedStmt.setString(6,invoiceNumber );
 			// execute the statement
 			preparedStmt.execute();
 			con.close();
@@ -121,7 +122,7 @@ public Connection connect()
 		}
 		catch (Exception e)
 		{
-			output = "Error while updating the Patient.";
+			output = "Error while updating the Payment.";
 			System.err.println(e.getMessage());
 		}
 		return output;
