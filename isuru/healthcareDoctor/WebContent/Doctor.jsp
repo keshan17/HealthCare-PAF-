@@ -1,7 +1,60 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
-<!DOCTYPE html>
+<%@page import="DoctorModel.Doctor" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+	<%
+if (request.getParameter("docNic") != null) 
+	{
+		Doctor reg=new Doctor();
+		//reg.connect();
+		String stsMsg=reg.addSession(request.getParameter("docNic"),
+				request.getParameter("specialization"),
+				request.getParameter("Hosptial"),
+				request.getParameter("Room_No"),
+				request.getParameter("datee"),
+				request.getParameter("timee"),
+				request.getParameter("timee2"));
+	
+		
 
+		session.setAttribute("statusMsg", stsMsg);
+		//response.sendRedirect("loginGui.jsp");
+						
+	}
+	
+	if (request.getParameter("docId") != null)
+	{
+		Doctor itemObject = new Doctor();
+	 	String stsMsg = itemObject.deleteSession(request.getParameter("docId"));
+	 	
+	 session.setAttribute("statusMsg", stsMsg);
+	} 
+	
+
+	 if (request.getParameter("udoctorId") != null) 
+	{
+		 Doctor update=new Doctor();
+		//app.connect();
+		String stsMsg=update.updateSession(request.getParameter("udoctorId"),
+				request.getParameter("uHosptial"),
+				request.getParameter("update_date"),
+				request.getParameter("upTime"),  
+				request.getParameter("upTime2"),
+				request.getParameter("Room_No"));
+	
+		
+
+		session.setAttribute("statusMsg", stsMsg);
+		//response.sendRedirect("patient.jsp");
+						
+	}  
+	
+	%>
+	
+	
+
+
+
+<!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
@@ -132,7 +185,11 @@
 	<fieldset>
 		<legend>View session</legend>
 		<form method="post" action="doctor.jsp">
-	
+		<%
+		Doctor viewDoc=new Doctor();
+		out.print(viewDoc.readSession());
+		%>
+		
 		
 		
 		</form>
